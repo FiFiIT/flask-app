@@ -1,8 +1,13 @@
 import time
 from flask_cors import CORS
-from flask import Flask, jsonify
+from flask import Flask, jsonify, flash, request, redirect, url_for
+from werkzeug.utils import secure_filename
+
+UPLOAD_FOLDER = 'E:/Nauka/FLASK/pictures'
+ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 cors = CORS(app)
 
 
@@ -19,11 +24,20 @@ tinderCards = [
         "name": "Citoren",
         "url": "Karpacz//IMG_20200826_100346.jpg",
     },
+    {
+        "name": "Alien",
+        "url": "C:/Users/filip/OneDrive/Pictures/xcom.jpg"
+    }
 ]
 
 
 @app.route('/')
 def hello():
+    return "Hello World!"
+
+
+@app.route('/tinderCards')
+def get_tinderCards():
     return jsonify(tinderCards)
 
 
@@ -38,4 +52,4 @@ def sayHello(name, age):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='192.168.0.48', debug=True)
